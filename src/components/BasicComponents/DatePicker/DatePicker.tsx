@@ -7,9 +7,11 @@ interface DatePickerProps {
     placeholder?: string;
     required: boolean;
     classInput: string;
+    value?: string;
+    onChange?:(e:any)=> void;
 }
 
-const DatePicker: React.FC<DatePickerProps> = ({ title, readonly, required, id, classInput }) => {
+const DatePicker: React.FC<DatePickerProps> = ({ title, readonly, required, id, classInput, value, onChange }) => {
     return (
         <div className={classInput}>
             <div className="form-floating mb-3">
@@ -20,6 +22,8 @@ const DatePicker: React.FC<DatePickerProps> = ({ title, readonly, required, id, 
                     disabled={readonly} 
                     id={id}
                     required={required} 
+                    onChange={onChange}
+                    value={value}
                 />
                 <label htmlFor={id}>
                     {required && <span className="required-tag">*</span>}

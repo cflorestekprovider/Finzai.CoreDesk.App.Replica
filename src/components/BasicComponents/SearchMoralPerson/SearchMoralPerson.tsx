@@ -15,7 +15,7 @@ const SearchMoralPerson: React.FC<SearchPhysicalPersonProps> = () => {
                 id="personId"
                 classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                 required={true}
-                readonly={true}
+                readonly={false}
                 title='Id Empresa'
                 icon={<SearchIcon />} />
 
@@ -25,7 +25,7 @@ const SearchMoralPerson: React.FC<SearchPhysicalPersonProps> = () => {
                 required={false}
                 title='Nombre Legal'
                 placeholder='Primer Apellido'
-                classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
+                classInput='col-12 col-md-6 col-lg-4 col-xl-6' />
 
             <Input
                 id='comercialName'

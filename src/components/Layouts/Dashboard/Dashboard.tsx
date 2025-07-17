@@ -4,25 +4,31 @@ import DashboardSettings from './Layout/DashboardSettings';
 import ModalCanvas from '../../ModalCanvas/ModalCanvas';
 import DashboardViewer from './Layout/DashboardViewer';
 import { useDashboardContext } from '../../../context/DashboardContext';
-import { DashboardType } from '../../../reducers/DashboardReducer';
+import { contentTypes } from '../../../reducers/DashboardReducer';
+import DashboardConfiguratorModal from '../../Dashboard/DashboardConfiguration/DashboardConfigurationModal';
 
 const Dashboard: React.FC = () => {
-    const { getDashboardToShow } = useDashboardContext();
+    const { getDashboardToShow, getShowDashboardSettings, setShowDashboardSettings } = useDashboardContext();
+
+    if (getShowDashboardSettings()) {
+        return (
+            <DashboardConfiguratorModal
+                show={true}
+                onClose={() => setShowDashboardSettings(false)}
+            />
+        );
+    }
 
     return (
-        <div className="p-3">
-            <div className="container-fluid bg-container-main no-width-restrictions">
-                <DashboardHeader  />
-                {
-                    getDashboardToShow() == DashboardType.DashBoardSettings && <DashboardSettings  />
-                }
-                {
-                    getDashboardToShow() == DashboardType.DashBoardViewer && <DashboardViewer />
-                }
-                
-                <ModalCanvas />
-            </div>
-        </div>
+        <>
+            <DashboardHeader />
+
+            {getDashboardToShow() === contentTypes.createDashboard && <DashboardSettings />}
+
+            {getDashboardToShow() === contentTypes.showDashboard && <DashboardViewer />}
+
+            <ModalCanvas />
+        </>
     );
 };
 

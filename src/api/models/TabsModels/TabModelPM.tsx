@@ -11,6 +11,7 @@ import { TabModel } from "./TabModelPF";
 const TabsModelPM: TabModel[] = [
     {
         title: 'Datos Generales',
+        translationKey: "dataentry.tabs.general_data",
         icon: <UserIcon />,
         referenciaTab: 'businessDataTab',
         isActive: true,
@@ -18,36 +19,42 @@ const TabsModelPM: TabModel[] = [
     },
     {
         title: 'Domicilio',
+        translationKey: "dataentry.tabs.address",
         icon: <AddressIcon />,
         referenciaTab: 'businessAddressDataTab',
         isActive: false,
         tab: <BusinessAddress />
     },{
         title: 'Propiedades',
+        translationKey: "dataentry.tabs.properties",
         icon: <PropertyIcon />,
         referenciaTab: 'businessJobDataTab',
         isActive: false,
         tab: <BusinessProperty />
     },{
         title: 'Socios',
+        translationKey: "dataentry.tabs.stockholders",
         icon: <PropertyIcon />,
         referenciaTab: 'businessPartnerDataTab',
         isActive: false,
         tab: <BusinessPartners />
     },{
         title: 'Representantes Legales',
+        translationKey: "dataentry.tabs.legal_representatives",
         icon: <LegalIcon />,
         referenciaTab: 'businessReferenceDataTab',
         isActive: false,
         tab: <BusinessLegal />
     },{
         title: 'Datos Fiscales',
+        translationKey: "dataentry.tabs.tax_data",
         icon: <TaxDataIcon />,
         referenciaTab: 'businessTaxDataTab',
         isActive: false,
         tab: <BusinessTaxData />
     },{
         title: 'Referencias Personales',
+        translationKey: "dataentry.tabs.references",
         icon: <ReferencesIcon />,
         referenciaTab: 'businessReferencesTab',
         isActive: false,

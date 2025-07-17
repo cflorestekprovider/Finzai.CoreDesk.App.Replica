@@ -9,9 +9,11 @@ interface InputProps {
     classInput: string;
     iconLeft: ReactNode;
     iconRight: ReactNode;
+    value?:string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; 
 }
 
-const InputWithIcon: React.FC<InputProps> = ({ placeholder, id, classInput, iconLeft, iconRight }) => {
+const InputWithIcon: React.FC<InputProps> = ({ placeholder, id, classInput, iconLeft, iconRight, value, onChange }) => {
     return (
         <div className="dashboard-nameplate">
             <div className="form-nameplate-editable">
@@ -20,7 +22,10 @@ const InputWithIcon: React.FC<InputProps> = ({ placeholder, id, classInput, icon
                 <input type="text"
                     className={classInput}
                     placeholder={placeholder}
-                    id={id} />
+                    id={id} 
+                    value={value}
+                    onChange={onChange}
+                    />
             </div>
         </div>
     );

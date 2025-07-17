@@ -1,6 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src\\assets",
+    "\\src\\components\\Layouts",
+    "\\src\\components\\Layouts\\Dashboard",
+    "\\src\\components\\Layouts\\Dataentry",
+    "\\src\\components\\Layouts\\Dataentry\\MainLayout",
+    "\\src\\components\\Layouts\\Dataentry\\MoralPerson",
+    "\\src\\components\\Layouts\\Dataentry\\PhysicalPerson",
+    "\\src\\components\\Layouts\\Dataentry\\SearchPerson",
+    "\\src\\components\\ModalCanvas"
   ],
+  "SelectedNode": "\\src",
   "PreviewInSolutionExplorer": false
 }

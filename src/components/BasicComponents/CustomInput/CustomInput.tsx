@@ -9,9 +9,12 @@ interface CustomInputWithModalProps {
     icon:ReactNode;
     readonly?:boolean;
     readonlyButton?:boolean;
+    value?: string;
+    onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void; 
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
-const CustomInput: React.FC<CustomInputWithModalProps> = ({ title, placeholder, required, id, classInput, icon, readonly = false, readonlyButton = false }) => {
+const CustomInput: React.FC<CustomInputWithModalProps> = ({ title, placeholder, required, id, classInput, icon, readonly = false, readonlyButton = false, value, onChange, onClick }) => {
     return (
         <div className={classInput}>
             <div className="input-group form-floating mb-3">
@@ -19,14 +22,15 @@ const CustomInput: React.FC<CustomInputWithModalProps> = ({ title, placeholder, 
                     type="text" 
                     className="form-control"
                     placeholder={placeholder} 
-
+                    value={value}
+                    onChange={onChange} 
                     readOnly={readonly}
                     disabled={readonly}
 
                     id={id} />
                     <button className="btn btn-primary addon-btn-attached-right" 
                         type="button" 
-
+                        onClick={onClick}
                         disabled={readonlyButton}
 
                         data-bs-toggle="offcanvas" 

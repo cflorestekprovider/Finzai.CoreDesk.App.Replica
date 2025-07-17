@@ -1,14 +1,15 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Input from '../../../../BasicComponents/Input/Input';
 import Select from '../../../../BasicComponents/Select/Select';
 import SelectModel from '../../../../../api/models/SelectModel/SelectModel';
-// import DatePicker from '../../../BasicComponents/DatePicker/DatePicker';
-// import CustomInputWithModal from '../../../BasicComponents/CustomInputWithModal/CustomInputWithModal';
 import { ClearIcon, SaveIcon } from '../../../../../api/models/IconsModels/IconsModels';
 import Button from '../../../../BasicComponents/Button/Button';
 
 const CustomerProperty: React.FC = () => {
 
+    const { t } = useTranslation();
+    
     const propertyType: SelectModel[] = [
         { value: "1", option: 'Empleado Privado' },
         { value: "2", option: 'Empleado Público' },
@@ -25,8 +26,8 @@ const CustomerProperty: React.FC = () => {
             <div className="col-12">
                 <div className="ui-title-action-bar">
                     <div className="ui-title">
-                        <h4>Propiedades</h4>
-                        <p>DESCRIPCIÓN</p>
+                        <h4>{t("dataentry.tabs.properties")}</h4>
+                        <p>{t("dataentry.tabs.properties_description")}</p>
                     </div>
                     <div className="ui-action-bar">
 
@@ -41,7 +42,7 @@ const CustomerProperty: React.FC = () => {
                                     <Select
                                         id="propertyType"
                                         readonly={false}
-                                        title='Tipo de propiedad'
+                                        title={t("fields.property_type")}
                                         required={true}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={propertyType}
@@ -49,7 +50,7 @@ const CustomerProperty: React.FC = () => {
                                     <Select
                                         id="propertyStatus"
                                         readonly={false}
-                                        title='Estatus'
+                                        title={t("fields.status")}
                                         required={true}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={status}
@@ -57,7 +58,7 @@ const CustomerProperty: React.FC = () => {
                                     <Input
                                         id="propertyValue"
                                         readonly={false}
-                                        title='Valor de la propiedad'
+                                        title={t("fields.property_value")}
                                         required={true}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                     />
@@ -66,16 +67,16 @@ const CustomerProperty: React.FC = () => {
                                         id='propertyDescription'
                                         readonly={false}
                                         required={true}
-                                        title='Descripción / Comentarios'
-                                        placeholder='Descripción / Comentarios'
+                                        title={t("fields.comments")}
+                                        placeholder={t("fields.comments")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-6' />
 
                                     <Input
                                         id='propertyRegisterNumber'
                                         readonly={false}
                                         required={true}
-                                        title='Número de registro'
-                                        placeholder='Número de registro'
+                                        title={t("fields.register_number")}
+                                        placeholder={t("fields.register_number")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
 
@@ -84,13 +85,13 @@ const CustomerProperty: React.FC = () => {
                                         <div className="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
                                             <Button
                                                 id='save'
-                                                title='Guardar información'
+                                                title={t("buttons.save")}
                                                 type='saveButton'
                                                 icon={<SaveIcon />} />
 
                                             <Button
                                                 id='clear'
-                                                title='Limpiar'
+                                                title={t("buttons.clear")}
                                                 type='clearButton'
                                                 icon={<ClearIcon />} />
 

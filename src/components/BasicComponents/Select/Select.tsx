@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import SelectModel from '../../../api/models/SelectModel/SelectModel';
 
 interface SelectProps {
@@ -11,18 +12,11 @@ interface SelectProps {
     useSeleccionOption?:boolean;
     selectedValue?:string;
     icon?: React.ReactNode; 
-    onChange?:(option:number) => void; 
+    onChange?:(e:any)=> void;
 }
 
 const Select: React.FC<SelectProps> = ({ title, readonly, required, id, classInput, options, useSeleccionOption = true, selectedValue, icon, onChange }) => {
-
-    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const selectedOption = parseInt(event.target.value);
-        if (!isNaN(selectedOption)) {
-            onChange?.(selectedOption); // ✅ Llamamos a la función con el valor seleccionado
-        }
-    };
-
+    const { t } = useTranslation();
     return (
         <div className={classInput}>
             <div className="ui-select mb-3">
@@ -32,17 +26,15 @@ const Select: React.FC<SelectProps> = ({ title, readonly, required, id, classInp
                     } {icon && <span className="me-2">{icon}</span>} {title}
                 </label>
                 <select className="form-select col-12" id={id}
+                onChange={onChange}
                     disabled={readonly}
-                    onChange={handleChange}
                     value={selectedValue}>
                     {
-                        useSeleccionOption && <option value="0">Seleccione...</option>
+                        useSeleccionOption && <option value="0">{t("fields.select")}</option>
                     }
                     {
                         options?.map((item) => {
-                            return (<option 
-                                        key={item.value} 
-                                        value={item.value}>{item.option}</option>)
+                            return (<option key={item.value} value={item.value}>{item.option}</option>)
                         })
                     }
                 </select>

@@ -12,8 +12,13 @@ dist
 dist-ssr
 *.local
 
+# Excluir todas las carpetas dist dentro de directorios específicos, pero no en la raíz
+!public/**/dist/
+
+
 # Editor directories and files
 .vscode/*
+.vs/*
 !.vscode/extensions.json
 .idea
 .DS_Store

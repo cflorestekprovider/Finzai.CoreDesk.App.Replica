@@ -1,17 +1,16 @@
 import React from 'react';
-// import DatePicker from '../../../BasicComponents/DatePicker/DatePicker';
-// import CustomInputWithModal from '../../../BasicComponents/CustomInputWithModal/CustomInputWithModal';
+import { useTranslation } from 'react-i18next';
 
 const CustomerRelationShip: React.FC = () => {
-
-    
+    const { t } = useTranslation();
+  
     return (
         <div className="row">
             <div className="col-12">
                 <div className="ui-title-action-bar">
                     <div className="ui-title">
-                        <h4>Relaciones</h4>
-                        <p>DESCRIPCIÓN</p>
+                        <h4>{t("dataentry.tabs.relations")}</h4>
+                        <p>{t("dataentry.tabs.relations_description")}</p>
                     </div>
                     <div className="ui-action-bar">
 

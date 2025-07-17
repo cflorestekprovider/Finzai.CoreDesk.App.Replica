@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Input from '../../../../BasicComponents/Input/Input';
 import Select from '../../../../BasicComponents/Select/Select';
 import SelectModel from '../../../../../api/models/SelectModel/SelectModel';
@@ -9,6 +10,8 @@ import Button from '../../../../BasicComponents/Button/Button';
 
 const BusinessData: React.FC = () => {
 
+        const { t } = useTranslation();
+    
     const genderOptions: SelectModel[] = [
         { value: "1", option: 'Masculino' },
         { value: "2", option: 'Femenino' },
@@ -44,8 +47,8 @@ const BusinessData: React.FC = () => {
             <div className="col-12">
                 <div className="ui-title-action-bar">
                     <div className="ui-title">
-                        <h4>Datos Generales</h4>
-                        <p>DESCRIPCIÓN</p>
+                        <h4>{t("dataentry.tabs.general_data")}</h4>
+                        <p>{t("dataentry.tabs.general_data_description")}</p>
                     </div>
                     <div className="ui-action-bar">
 
@@ -108,22 +111,22 @@ const BusinessData: React.FC = () => {
                                         id='commercialName'
                                         readonly={false}
                                         required={true}
-                                        title='Nombre Comercial'
-                                        placeholder='Nombre Comercial'
+                                        title={t("fields.commercial_name")} 
+                                        placeholder={t("fields.commercial_name")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id='legalName'
                                         readonly={false}
                                         required={true}
-                                        title='Nombre Legal'
-                                        placeholder='Nombre Legal'
+                                        title={t("fields.legal_name")} 
+                                        placeholder={t("fields.legal_name")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Select
                                         id="businessStatus"
                                         readonly={false}
-                                        title='Estatus del Cliente'
+                                        title={t("fields.client_status")} 
                                         required={true}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={clientTypeOptions} />
@@ -132,8 +135,8 @@ const BusinessData: React.FC = () => {
                                         id='identificationRFC'
                                         readonly={false}
                                         required={true}
-                                        title='RFC'
-                                        placeholder='RFC'
+                                        title={t("fields.RFC")} 
+                                        placeholder={t("fields.RFC")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <DatePicker
@@ -141,19 +144,19 @@ const BusinessData: React.FC = () => {
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         readonly={false}
                                         required={true}
-                                        title='Fecha Constitución' />
+                                        title={t("fields.constitution_date")}  />
 
                                     <DatePicker
                                         id="workingSince"
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         readonly={false}
                                         required={true}
-                                        title='Fecha de inicio de operaciones' />
+                                        title={t("fields.operation_start_date")} />
 
                                     <Select
                                         id="accreditedType"
                                         readonly={false}
-                                        title='Tipo de Acreditado Relacionado'
+                                        title={t("fields.accredited_related_type")} 
                                         required={true}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-6'
                                         options={professionOptions} />
@@ -161,7 +164,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="clientType"
                                         readonly={false}
-                                        title='Tipo de Cliente'
+                                        title={t("fields.client_type")} 
                                         required={true}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-6'
                                         options={professionOptions} />
@@ -169,7 +172,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="portfolioType"
                                         readonly={false}
-                                        title='Tipo de Cartera'
+                                        title={t("fields.portfolio_type")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={ocupationOptions} />
@@ -177,7 +180,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="relationType"
                                         readonly={false}
-                                        title='Tipo de relacion'
+                                        title={t("fields.relation_type")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={clientStatus} />
@@ -185,7 +188,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="relation"
                                         readonly={false}
-                                        title='Relacion'
+                                        title={t("fields.relation")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={clientStatus} />
@@ -194,7 +197,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="businessGroup"
                                         readonly={false}
-                                        title='Grupo de la Empresa'
+                                        title={t("fields.business_group")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={clientStatus} />
@@ -202,7 +205,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="riskGroup"
                                         readonly={false}
-                                        title='Grupo de Riesgo'
+                                        title={t("fields.risk_group")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={clientStatus} />
@@ -211,7 +214,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="nacionality"
                                         readonly={false}
-                                        title='Nacionalidad'
+                                        title={t("fields.nationality")} 
                                         required={true}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={genderOptions} />
@@ -220,7 +223,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="country"
                                         readonly={false}
-                                        title='País'
+                                        title={t("fields.country")} 
                                         required={true}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={genderOptions} />
@@ -228,7 +231,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="propertyType"
                                         readonly={false}
-                                        title='Tipo de Propiedad'
+                                        title={t("fields.property_type")}
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={genderOptions} />
@@ -236,7 +239,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="type"
                                         readonly={false}
-                                        title='Tipo'
+                                        title={t("fields.type")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={genderOptions} />
@@ -244,7 +247,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="sector"
                                         readonly={false}
-                                        title='Sector'
+                                        title={t("fields.sector")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={genderOptions} />
@@ -252,7 +255,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="sectorType"
                                         readonly={false}
-                                        title='Tipo de Sector'
+                                        title={t("fields.sector_type")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={genderOptions} />
@@ -260,7 +263,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="activity"
                                         readonly={false}
-                                        title='Area/Industria'
+                                        title={t("fields.activity")} 
                                         required={true}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={genderOptions} />
@@ -268,7 +271,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="specialization"
                                         readonly={false}
-                                        title='Especialización'
+                                        title={t("fields.specialization")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={genderOptions} />
@@ -276,7 +279,7 @@ const BusinessData: React.FC = () => {
                                     <Select
                                         id="size"
                                         readonly={false}
-                                        title='Tamaño'
+                                        title={t("fields.size")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={genderOptions} />
@@ -285,38 +288,38 @@ const BusinessData: React.FC = () => {
                                         id='employees'
                                         readonly={false}
                                         required={true}
-                                        title='Número Empleados'
-                                        placeholder='Número Empleados'
+                                        title={t("fields.number_of_employees")} 
+                                        placeholder={t("fields.number_of_employees")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id='customers'
                                         readonly={false}
                                         required={true}
-                                        title='Clientes'
-                                        placeholder='Clientes'
+                                        title={t("fields.customers")} 
+                                        placeholder={t("fields.customers")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id='webpage'
                                         readonly={false}
                                         required={false}
-                                        title='Página Web'
-                                        placeholder='Página Web'
+                                        title={t("fields.web_page")} 
+                                        placeholder={t("fields.web_page")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id='folio'
                                         readonly={false}
                                         required={false}
-                                        title='Folio Mercantil'
-                                        placeholder='Folio Mercantil'
+                                        title={t("fields.mercantile_folio")} 
+                                        placeholder={t("fields.mercantile_folio")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Select
                                         id="risk"
                                         readonly={false}
-                                        title='Riesgo'
+                                        title={t("fields.risk")} 
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={genderOptions} />
@@ -325,29 +328,29 @@ const BusinessData: React.FC = () => {
                                         id="businessType"
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         required={true}
-                                        title='Tipo Negocio'
+                                        title={t("fields.business_type")} 
                                         icon={<BusinessTypeIcon />} />
 
                                     <CustomInputWithModal
                                         id="activities"
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         required={true}
-                                        title='Actividades'
+                                        title={t("fields.activities")} 
                                         icon={<ActivitiesIcon />} />
 
                                     <CustomInputWithModal
                                         id="identification"
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         required={true}
-                                        title='Identificación'
+                                        title={t("fields.identification")} 
                                         icon={<IdentificationIcon />} />
 
                                     <Input
                                         id='identificationType'
                                         readonly={true}
                                         required={false}
-                                        title='Tipo Identificación'
-                                        placeholder='Tipo Identificación'
+                                        title={t("fields.identification_type")} 
+                                        placeholder={t("fields.identification_type")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
 
@@ -355,30 +358,30 @@ const BusinessData: React.FC = () => {
                                         id="email"
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         required={true}
-                                        title='Correo electrónico'
+                                        title={t("fields.email")} 
                                         icon={<EmailIcon />} />
 
                                     <CustomInputWithModal
                                         id="phone"
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         required={true}
-                                        title='Teléfono'
+                                        title={t("fields.phone")} 
                                         icon={<PhoneIcon />} />
 
                                     <Input
                                         id='extention'
                                         readonly={true}
                                         required={false}
-                                        title='Extensión'
-                                        placeholder='Extensión'
+                                        title={t("fields.extension")} 
+                                        placeholder={t("fields.extension")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id='contactTime'
                                         readonly={true}
                                         required={false}
-                                        title='Hora contacto'
-                                        placeholder='Hora contacto'
+                                        title={t("fields.contact_time")} 
+                                        placeholder={t("fields.contact_time")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
 
@@ -387,7 +390,7 @@ const BusinessData: React.FC = () => {
                                         <div className="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
                                            <Button
                                                 id='save'
-                                                title='Guardar'
+                                                title={t("buttons.save")} 
                                                 type='saveButton'
                                                 icon={<SaveIcon />} />
 

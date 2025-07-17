@@ -9475,7 +9475,7 @@ fieldset:disabled .btn {
 /* line 3, E:/Mis Proyectos/Freelance/TekProvider/TEMPLATE TRABAJADO 2024/TRABAJADO/scss/bootstrap/_offcanvas.scss */
 .offcanvas-sm, .offcanvas-md, .offcanvas-lg, .offcanvas-xl, .offcanvas {
   --bs-offcanvas-zindex: 1045;
-  --bs-offcanvas-width: 400px;
+  --bs-offcanvas-width: 750px;
   --bs-offcanvas-height: 30vh;
   --bs-offcanvas-padding-x: 1rem;
   --bs-offcanvas-padding-y: 1rem;
@@ -11243,6 +11243,11 @@ fieldset:disabled .btn {
 /* line 67, E:/Mis Proyectos/Freelance/TekProvider/TEMPLATE TRABAJADO 2024/TRABAJADO/scss/bootstrap/mixins/_utilities.scss */
 .h-50 {
   height: 50% !important;
+}
+
+/* line 67, E:/Mis Proyectos/Freelance/TekProvider/TEMPLATE TRABAJADO 2024/TRABAJADO/scss/bootstrap/mixins/_utilities.scss */
+.mh-350 {
+    max-height: 350px !important;
 }
 
 /* line 67, E:/Mis Proyectos/Freelance/TekProvider/TEMPLATE TRABAJADO 2024/TRABAJADO/scss/bootstrap/mixins/_utilities.scss */
@@ -33229,4 +33234,9 @@ header.topbar {
 .dashboard-box-holder.hidden-board {
   display: none !important;
 }
+
+.row.no-gap-y > * {
+    margin-top: 0 !important;
+}
+
 /*# sourceMappingURL=style.css.map */

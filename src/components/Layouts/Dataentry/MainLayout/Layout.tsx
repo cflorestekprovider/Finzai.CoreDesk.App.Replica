@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import TabDrawerMenu from '../../../TabDrawerMenu/TabDrawerMenu';
 import { TabModel } from '../../../../api/models/TabsModels/TabModelPF';
 import clsx from 'clsx';
+import { useCustomerContext } from '../../../../context/DataEntry/PhysicalPerson/CustomerDataContext';
 
 
 interface LayoutProps {
     items: TabModel[];
+    id: string;
+    personType:number;
 }
 
-const Layout: React.FC<LayoutProps> = ({ items }) => {
+const Layout: React.FC<LayoutProps> = ({ items, id, personType }) => {
+
+    const {  setField } = useCustomerContext();
+
+    useEffect(() => {
+        if(personType == 1)
+        {
+            setField("id", id, "customer");
+        }
+    }, [id])
+
     return (
         <>
             <TabDrawerMenu items={items} />

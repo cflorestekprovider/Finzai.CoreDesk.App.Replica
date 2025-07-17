@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from "react-i18next";
 
 interface PageHeaderProps {
   title?: string;
@@ -8,6 +9,7 @@ interface PageHeaderProps {
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({ title, name, isButtonVisible, onBack }) => {
+  const { t } = useTranslation();
   return (
     <div className="page-titles bg-white">
       <div className="row">
@@ -21,7 +23,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, name, isButtonVisible, o
               className="btn btn-primary"
               onClick={onBack}
             >
-              Regresar a Búsqueda
+              {t("dataentry.back_to_search")}
             </button>
           )}
         </div>

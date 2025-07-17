@@ -4,7 +4,8 @@ import React, { ReactNode } from 'react';
 export const typeButton = {
     saveButton: "btn-light-success text-success",
     clearButton: "btn-light-info text-info",
-    primaryButton: "btn-primary d-flex align-items-center ms-2"
+    primaryButton: "btn-primary d-flex align-items-center ms-2",
+    simpleButton: "btn-light-info text-info",
 } as const;  
 
 type ButtonType = keyof typeof typeButton;  

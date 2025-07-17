@@ -1,97 +1,150 @@
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import Input from '../../../../BasicComponents/Input/Input';
 import Select from '../../../../BasicComponents/Select/Select';
-import SelectModel from '../../../../../api/models/SelectModel/SelectModel';
 import DatePicker from '../../../../BasicComponents/DatePicker/DatePicker';
-import CustomInputWithModal from '../../../../BasicComponents/CustomInputWithModal/CustomInputWithModal';
 import Button from '../../../../BasicComponents/Button/Button';
 import PostalCode from '../../../../BasicComponents/PostalCode/PostalCode';
-import { ClearIcon, PhoneIcon, SaveIcon } from '../../../../../api/models/IconsModels/IconsModels';
+import { ClearIcon, SaveIcon } from '../../../../../api/models/IconsModels/IconsModels';
+import { useCatalogs } from '../../../../../context/Catalog/CatalogContext';
+import { useCustomerContext } from '../../../../../context/DataEntry/PhysicalPerson/CustomerDataContext';
+import { NumericFormat } from 'react-number-format';
+import { CreateAddress, UpdateAddress } from '../../../../../api/dataentry/physicalPerson/physicalPerson';
+import { showSuccessSweetAlert } from '../../../../../utils/SweetAlertUtils/sweetAlertUtils';
+import Table from '../../../../BasicComponents/Table/Table';
+import { AddressState } from '../../../../../reducers/InitialStates/PhysicalPersonState';
+
 
 const CustomerAddress: React.FC = () => {
 
-    const genderOptions: SelectModel[] = [
-        { value: "1", option: 'Masculino' },
-        { value: "2", option: 'Femenino' },
-        { value: "3", option: 'Otro' }
-    ];
+    const { t } = useTranslation();
+    const { catalogs, countryOptions } = useCatalogs();
+    const { state, setField, setAddress, setAddresses } = useCustomerContext();
+    const { address } = state;
 
-    const clientTypeOptions: SelectModel[] = [
-        { value: "1", option: 'Cliente' },
-        { value: "2", option: 'Cliente con restricciones' },
-        { value: "3", option: 'Excliente' }
-    ];
+    const emptyAddress = {
+        id: null,
+        customerId: "",
+        statusId: "",
+        addressTypeId: "",
+        propertyTypeId: "",
+        livingSinceDate: new Date,
+        countryId: "",
+        postalCode: "",
+        stateId: "",
+        cityId: 0,
+        municipalityId: 0,
+        neighborhoodId: 0,
+        street: "",
+        exteriorNumber: "",
+        propertyValue: 0,
+        mortgage: 0,
+        proofOfAddressId: "",
+        marginalId: "",
+        zoneTypeId: "",
+        interiorNumber: "",
+        crossStreet: "",
+        yearsResiding: 0,
+        monthsResiding: 0,
+    };
 
-    const professionOptions: SelectModel[] = [
-        { value: "1", option: 'Ama de casa' },
-        { value: "2", option: 'Desempleado' },
-        { value: "3", option: 'Estudiante' }
-    ];
-    
-    const ocupationOptions: SelectModel[] = [
-        { value: "1", option: 'Empleado Privado' },
-        { value: "2", option: 'Empleado Publico' },
-        { value: "3", option: 'Oficio' }
-    ];
+    const getCatalogName = (
+        catalog: { value: string; option: string }[],
+        id: string | number
+    ): string => {
+        const item = catalog.find(opt => opt.value === String(id));
+        return item ? item.option : String(id);
+    };
+
+    const tableData = useMemo(() => {
+        return (state.addresses || []).map(addr => ({
+            ...addr,
+            statusText: getCatalogName(catalogs.Status, addr.statusId),
+            addressTypeText: getCatalogName(catalogs.AddressType, addr.addressTypeId),
+        }));
+    }, [state.addresses, catalogs.Status, catalogs.AddressType]);
+
+
+    const handleSave = async () => {
+        try {
+            if (state.address.id && state.address.id.trim() !== '') {
+                await UpdateAddress(state.address);
+
+                // Actualiza el listado completo
+                const updatedAddresses = state.addresses.map(addr =>
+                    addr.id === state.address.id ? { ...state.address } : addr
+                );
+
+                setAddresses(updatedAddresses);
+                setAddress(emptyAddress);
+                showSuccessSweetAlert("Domicilio actualizado");
+            } else {
+
+                const addressToSave =
+                {
+                    ...state.address,
+                    customerId: state.customer.id
+                }
+
+                const response = await CreateAddress(addressToSave);
+                if (response) {
+                    const newAddress = { ...addressToSave, id: response };
+                    const updatedAddresses = [...state.addresses, newAddress];
+
+                    console.log(updatedAddresses)
+                    setAddresses(updatedAddresses);
+                    setAddress(emptyAddress);
+                    showSuccessSweetAlert("Domicilio creado");
+                }
+            }
+        } catch (err: any) {
+            console.error("Error al guardar el cliente:", err);
+        }
+    };
+
+    const handleClear = () => {
+        setAddress(emptyAddress);
+    };
+
+    useEffect(() => {
+        if (!state.address.livingSinceDate) return;
+
+        const startDate = new Date(state.address.livingSinceDate);
+        const now = new Date();
+
+        let years = now.getFullYear() - startDate.getFullYear();
+        let months = now.getMonth() - startDate.getMonth();
+
+        if (months < 0) {
+            years--;
+            months += 12;
+        }
+
+        setField('yearsResiding', years, 'address');
+        setField('monthsResiding', months, 'address');
+
+    }, [state.address.livingSinceDate]);
+
+    const handleAddressChange = (updatedFields: Partial<AddressState>) => {
+
+
+        const newAddress = {
+            ...state.address,
+            ...updatedFields
+        }
+
+        setAddress(newAddress);
+    };
 
    
+
     return (
         <div className="row">
             <div className="col-12">
                 <div className="ui-title-action-bar">
                     <div className="ui-title">
-                        <h4>Domicilio</h4>
-                        <p>DESCRIPCIÓN</p>
-                    </div>
-                    <div className="ui-action-bar">
-
-                        {/* PARA AGREGAR OPCIONES DE BOTONES */}
-
-                        {/* <div className="dropdown ms-2">
-                            <button className="btn d-flex bg-white align-items-center border full-height" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-more-vertical feather-xs fill-white me-2"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
-                                Opciones
-                                <span className="ms-2">
-                                    <i className="ri-arrow-down-s-line fs-4"></i>
-                                </span>
-                            </button>
-                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                <li>
-                                    <a className="dropdown-item" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-message-circle feather-xs fill-white me-2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-                                        Comentarios
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-bookmark feather-xs fill-white me-2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
-                                        Atributos
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-mail feather-xs fill-white me-2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                        Buró
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-file-text feather-xs fill-white me-2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                                        Proforma customizada
-                                    </a>
-                                </li>
-                                <li>
-                                    <a className="dropdown-item" href="#" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCuentasBancarias" aria-controls="offcanvasRight">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-dollar-sign feather-xs fill-white me-2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                                        Cuentas bancarias
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <button type="button" className="btn bg-outline-primary waves-effect waves-light btn-outline-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-folder feather-sm fill-white me-2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
-                            Documentos
-                        </button> */}
+                        <h4>{t("dataentry.tabs.address")}</h4>
+                        <p>{t("dataentry.tabs.address_description")}</p>
                     </div>
                 </div>
                 <div className="card">
@@ -99,138 +152,212 @@ const CustomerAddress: React.FC = () => {
                         <div className="tab-content">
                             <form>
                                 <div className="row form-compact-holder">
-                                    <Select 
-                                        id="statusAddress" 
-                                        readonly={false} 
-                                        title='Estatus' 
-                                        required={true} 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' 
-                                        options={clientTypeOptions} />
-                                    <Select 
-                                        id="addressType" 
-                                        readonly={false} 
-                                        title='Tipo de Domicilio' 
-                                        required={true} 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' 
-                                        options={professionOptions} />
-                                    
-                                    <Select 
-                                        id="propertyType" 
-                                        readonly={false} 
-                                        title='Tipo de Propiedad' 
-                                        required={true} 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' 
-                                        options={ocupationOptions} />
+                                    <Select
+                                        id="statusAddress"
+                                        readonly={false}
+                                        title={t("fields.status")}
+                                        required={true}
+                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3'
+                                        options={catalogs.Status}
+                                        selectedValue={address.statusId?.toString()}
+                                        onChange={(e) => setField('statusId', e.target.value, 'address')}
+                                    />
 
-                                    <Input 
-                                        id='propertyValue' 
-                                        readonly={false} 
-                                        required={false} 
-                                        title='Valor de la Propiedad' 
-                                        placeholder='Valor de la Propiedad' 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
+                                    <Select
+                                        id="addressType"
+                                        readonly={false}
+                                        title={t("fields.address_type")}
+                                        required={true}
+                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3'
+                                        options={catalogs.AddressType}
+                                        selectedValue={address.addressTypeId?.toString()}
+                                        onChange={(e) => setField('addressTypeId', e.target.value, 'address')}
+                                    />
 
-                                    <DatePicker 
-                                        id="dateAddress" 
+                                    <Select
+                                        id="propertyType"
+                                        readonly={false}
+                                        title={t("fields.property_type")}
+                                        required={true}
+                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3'
+                                        options={catalogs.PropertyType}
+                                        selectedValue={address.propertyTypeId?.toString()}
+                                        onChange={(e) => setField('propertyTypeId', e.target.value, 'address')}
+                                    />
+
+                                    <Select
+                                        id="marginal"
+                                        readonly={false}
+                                        title={t("fields.marginal")}
+                                        required={true}
+                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3'
+                                        options={catalogs.Marginal}
+                                        selectedValue={address.marginalId?.toString()}
+                                        onChange={(e) => setField('marginalId', e.target.value, 'address')}
+                                    />
+
+                                    <NumericFormat
+                                        id="propertyValue"
+                                        readonly={false}
+                                        required={false}
+                                        title={t("fields.property_value")}
+                                        placeholder={t("fields.property_value")}
+                                        classInput="col-12 col-md-6 col-lg-4 col-xl-3"
+                                        value={address.propertyValue}
+                                        onValueChange={(e) => setField("propertyValue", e.floatValue || 0, "address")}
+                                        prefix="$"
+                                        allowNegative={false}
+                                        decimalScale={0}
+                                        thousandSeparator
+                                        customInput={Input}
+                                    />
+
+                                    <NumericFormat
+                                        id='mortgage'
+                                        readonly={false}
+                                        required={false}
+                                        title={t("fields.mortgage")}
+                                        placeholder={t("fields.mortgage")}
+                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3'
+                                        value={String(address.mortgage)}
+                                        onValueChange={(e) => setField('mortgage', e.floatValue, 'address')}
+                                        prefix="$"
+                                        allowNegative={false}
+                                        decimalScale={0}
+                                        thousandSeparator
+                                        customInput={Input}
+                                    />
+
+                                    <DatePicker
+                                        id="livingSince"
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         readonly={false}
                                         required={true}
-                                        title='Fecha' />
+                                        title={t("fields.living_since_date")}
+                                        value={address.livingSinceDate}
+                                        onChange={(e) => setField('livingSinceDate', e.target.value, 'address')}
+                                    />
 
-                                    <div className="col-12 col-md-6 col-lg-4 col-xl-3">
-                                        <div className="form-floating mb-3">
-                                            <input type="text"  className="form-control" value="Teléfono" id="elm_21" />
-                                            <label htmlFor="elm_21">Tipo Teléfono</label>
-                                        </div>
-                                    </div>
-
-                                    <CustomInputWithModal
-                                        id="addressPhone"
+                                    <Input
+                                        id='yearsResiding'
+                                        readonly={true}
+                                        required={false}
+                                        title={t("fields.years_residing")}
+                                        placeholder={t("fields.years_residing")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
+                                        value={String(address.yearsResiding ?? 0)}
+                                    />
+
+                                    <Input
+                                        id='monthsResiding'
+                                        readonly={true}
+                                        required={false}
+                                        title={t("fields.months_residing")}
+                                        placeholder={t("fields.months_residing")}
+                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3'
+                                        value={String(address.monthsResiding ?? 0)}
+                                        onChange={(e) => setField('monthsResiding', e.target.value, 'address')}
+                                    />
+
+                                    <Select
+                                        id="addressCountry"
+                                        readonly={false}
+                                        title={t("fields.country")}
                                         required={true}
-                                        title='Teléfono'
-                                        icon={<PhoneIcon />} />
+                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3'
+                                        options={countryOptions}
+                                        selectedValue={String(address.countryId)}
+                                        onChange={(e) => setField('countryId', e.target.value, 'address')}
+                                    />
 
-                                    <Input 
-                                        id='addressExtention' 
-                                        readonly={true} 
-                                        required={false} 
-                                        title='Extensión' 
-                                        placeholder='Extensión' 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
-                                   
-                                    <Input 
-                                        id='addressContactTime' 
-                                        readonly={true} 
-                                        required={false} 
-                                        title='Hora contacto' 
-                                        placeholder='Hora contacto' 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
+                                    <PostalCode
+                                        address={address}
+                                        onAddressChange={handleAddressChange}
+                                    />
 
-                                    <Select 
-                                        id="addressCountry" 
-                                        readonly={false} 
-                                        title='País' 
-                                        required={true} 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' 
-                                        options={genderOptions} />
 
-                                   <PostalCode />
-                                    
-                                   <Input 
-                                        id='addressStreet' 
-                                        readonly={false} 
-                                        required={false} 
-                                        title='Calle' 
-                                        placeholder='Calle' 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
-                                    <Input 
-                                        id='addressExternalNumber' 
-                                        readonly={false} 
-                                        required={false} 
-                                        title='Número Exterior' 
-                                        placeholder='Número Exterior' 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
-                                    
-                                    <Input 
-                                        id='addressInternalNumber' 
-                                        readonly={false} 
-                                        required={false} 
-                                        title='Número Interior' 
-                                        placeholder='Número Interior' 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
+                                    <Select
+                                        id="zoneType"
+                                        readonly={false}
+                                        title={t("fields.zone_type")}
+                                        required={true}
+                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3'
+                                        options={catalogs.ZoneType}
+                                        selectedValue={String(address.zoneTypeId)}
+                                        onChange={(e) => setField('zoneTypeId', e.target.value, 'address')}
+                                    />
 
-                                    <Input 
-                                        id='addressCrossWith' 
-                                        readonly={false} 
-                                        required={false} 
-                                        title='Cruza con' 
-                                        placeholder='Cruza con' 
-                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
+                                    <Select
+                                        id="comprobante"
+                                        readonly={false}
+                                        title={t("fields.proof_of_address")}
+                                        required={true}
+                                        classInput='col-12 col-md-6 col-lg-4 col-xl-3'
+                                        options={catalogs.ProofOfAddressType}
+                                        selectedValue={String(address.proofOfAddressId)}
+                                        onChange={(e) => setField('proofOfAddressId', e.target.value, 'address')}
+                                    />
 
-                                    
                                     <div className="col-12">
                                         <hr />
                                         <div className="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
                                             <Button
                                                 id='save'
-                                                title='Guardar información'
+                                                title={t("buttons.save")}
                                                 type='saveButton'
-                                                icon={<SaveIcon />} />
+                                                icon={<SaveIcon />}
+                                                onClick={handleSave}
+                                            />
 
-                                            <Button
+                                            {<Button
                                                 id='clear'
-                                                title='Limpiar'
+                                                title={t("buttons.clear")}
                                                 type='clearButton'
-                                                icon={<ClearIcon />} />
-                                            
+                                                icon={<ClearIcon />}
+                                                onClick={handleClear}
+
+                                            />}
                                         </div>
                                     </div>
+
                                 </div>
                             </form>
+
+                            <div className="col-12">
+                                <hr />
+                                <Table
+                                    id='searchPersonTable'
+                                    title={t("Direcciones")}
+                                    columns={[
+                                        { name: "ID", field: "id", hidden: true },
+                                        {
+                                            name: "Estatus",
+                                            field: "statusText",
+                                        },
+                                        {
+                                            name: "Tipo",
+                                            field: "addressTypeText",
+                                        },
+                                        {
+                                            name: "Dirección",
+                                            field: ["street", "exteriorNumber", "interiorNumber", "postalCode"],
+                                        },
+                                    ]}
+                                    data={tableData}
+                                    onRowClick={(row: any) => {
+                                        const selected = state.addresses.find(addr => addr.id === row.id);
+                                        if (selected) {
+                                            setAddress(selected);
+                                        }
+                                    }}
+                                />
+                            </div>
+
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>

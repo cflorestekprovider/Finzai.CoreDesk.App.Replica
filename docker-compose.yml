@@ -1,0 +1,40 @@
+services:
+ registration:
+  image: danielsancheztekprovider1/registrationapp
+  networks:
+   - frontend-network
+ quoter:
+  image: danielsancheztekprovider1/quoterapp
+  networks:
+   - frontend-network
+ quoterauto:
+  image: danielsancheztekprovider1/quoterauto
+  networks:
+   - frontend-network
+ mainhost:
+  image: danielsancheztekprovider1/mainhost
+  networks:
+   - frontend-network
+ coredesk:
+  image: danielsancheztekprovider1/coredesk
+  networks:
+   - frontend-network
+ customer:
+  image: danielsancheztekprovider1/customer
+  networks:
+   - frontend-network
+ configurationapi:
+  image: danielsancheztekprovider1/configurationapi
+  networks:
+   - frontend-network
+ nginx:
+  image: nginx
+  ports:
+   - "80:80"
+  volumes:
+   - ./nginx.conf:/etc/nginx/nginx.conf
+  networks:
+   - frontend-network
+networks:
+ frontend-network:
+  driver: bridge

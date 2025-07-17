@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import CustomInput from '../CustomInput/CustomInput';
 import { SearchIcon } from '../../../api/models/IconsModels/IconsModels';
 import Input from '../Input/Input';
@@ -8,47 +9,47 @@ interface SearchPhysicalPersonProps {
 }
 
 const SearchPhysicalPerson: React.FC<SearchPhysicalPersonProps> = ({ includeBirthDay = false }) => {
-
+    const { t } = useTranslation();
     return (
         <>
             <CustomInput
                 id="personId"
                 classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                 required={true}
-                readonly={true}
-                title='Id Individuo'
+                readonly={false}
+                title={t("fields.id_individual")}
                 icon={<SearchIcon />} />
 
             <Input
                 id='firtsLastName'
                 readonly={true}
                 required={false}
-                title='Primer Apellido'
-                placeholder='Primer Apellido'
+                title={t("fields.first_last_name")}
+                placeholder={t("fields.first_last_name")}
                 classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
             <Input
                 id='secondLastName'
                 readonly={true}
                 required={false}
-                title='Segundo Apellido'
-                placeholder='Segundo Apellido'
+                title={t("fields.second_last_name")}
+                placeholder={t("fields.second_last_name")}
                 classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
             <Input
                 id='Name'
                 readonly={true}
                 required={false}
-                title='Nombre'
-                placeholder='Nombre'
+                title={t("fields.name")}
+                placeholder={t("fields.name")}
                 classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
             <Input
                 id='SecondName'
                 readonly={true}
                 required={false}
-                title='Segundo Nombre'
-                placeholder='Segundo Nombre'
+                title={t("fields.second_name")}
+                placeholder={t("fields.second_name")}
                 classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
             {
@@ -56,8 +57,8 @@ const SearchPhysicalPerson: React.FC<SearchPhysicalPersonProps> = ({ includeBirt
                     id='birthDay'
                     readonly={true}
                     required={false}
-                    title='Fecha de Nacimiento'
-                    placeholder='Fecha de Nacimiento'
+                    title={t("fields.birthdate")}
+                    placeholder={t("fields.birthdate")}
                     classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
             }

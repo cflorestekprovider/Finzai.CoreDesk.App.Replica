@@ -1,14 +1,15 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Input from '../../../../BasicComponents/Input/Input';
 import Select from '../../../../BasicComponents/Select/Select';
 import SelectModel from '../../../../../api/models/SelectModel/SelectModel';
-// import DatePicker from '../../../BasicComponents/DatePicker/DatePicker';
-// import CustomInputWithModal from '../../../BasicComponents/CustomInputWithModal/CustomInputWithModal';
 import { ClearIcon, SaveIcon } from '../../../../../api/models/IconsModels/IconsModels';
 import Button from '../../../../BasicComponents/Button/Button';
 
 const BusinessTaxData: React.FC = () => {
 
+    const { t } = useTranslation();
+    
     const propertyType: SelectModel[] = [
         { value: "1", option: 'Empleado Privado' },
         { value: "2", option: 'Empleado Público' },
@@ -22,8 +23,8 @@ const BusinessTaxData: React.FC = () => {
             <div className="col-12">
                 <div className="ui-title-action-bar">
                     <div className="ui-title">
-                        <h4>Datos Fiscales</h4>
-                        <p>DESCRIPCIÓN</p>
+                    <h4>{t("dataentry.tabs.tax_data")}</h4>
+                    <p>{t("dataentry.tabs.tax_data_description")}</p>
                     </div>
                     <div className="ui-action-bar">
 
@@ -39,23 +40,23 @@ const BusinessTaxData: React.FC = () => {
                                     <Input
                                         id="taxDataLegalName"
                                         readonly={true}
-                                        title='Razón Social'
+                                        title={t("fields.social_reason")}
                                         required={false}
-                                        placeholder='Razón Social'
+                                        placeholder={t("fields.social_reason")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataRegimen"
                                         readonly={true}
-                                        title='Régimen Fiscal'
+                                        title={t("fields.fiscal_regime")}
                                         required={false}
-                                        placeholder='Régimen Fiscal'
+                                        placeholder={t("fields.fiscal_regime")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Select
                                         id="taxDataRegimenFiscalCode"
                                         readonly={false}
-                                        title='Código de Régimen Fiscal'
+                                        title={t("fields.fiscal_regime_code")}
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={propertyType} />
@@ -63,7 +64,7 @@ const BusinessTaxData: React.FC = () => {
                                     <Select
                                         id="taxDataCFDiCode"
                                         readonly={false}
-                                        title='Código de CFDi'
+                                        title={t("fields.cfdi_code")}
                                         required={false}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         options={propertyType} />
@@ -71,137 +72,137 @@ const BusinessTaxData: React.FC = () => {
                                     <Input
                                         id="taxDataEmail"
                                         readonly={true}
-                                        title='Correo Electrónico'
+                                        title={t("fields.email")}
                                         required={false}
-                                        placeholder='Correo Electrónico'
+                                        placeholder={t("fields.email")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataRFC"
                                         readonly={true}
-                                        title='RFC'
+                                        title={t("fields.RFC")}
                                         required={false}
-                                        placeholder='RFC'
+                                        placeholder={t("fields.RFC")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataCapitalRegimen"
                                         readonly={true}
-                                        title='Régimen de capital'
+                                        title={t("fields.capital_regime")}
                                         required={false}
-                                        placeholder='Régimen de capital'
+                                        placeholder={t("fields.capital_regime")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataComercialName"
                                         readonly={true}
-                                        title='Nombre Comercial'
+                                        title={t("fields.commercial_name")}
                                         required={false}
-                                        placeholder='Nombre Comercial'
+                                        placeholder={t("fields.commercial_name")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataStatus"
                                         readonly={true}
-                                        title='Estatus en el padrón'
+                                        title={t("fields.registry_status")}
                                         required={false}
-                                        placeholder='Estatus en el padrón'
+                                        placeholder={t("fields.padron_status")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataDate"
                                         readonly={true}
-                                        title='Fecha de último cambio de estado'
+                                        title={t("fields.last_status_change_date")}
                                         required={false}
-                                        placeholder='Fecha de último cambio de estado'
+                                        placeholder={t("fields.last_status_change_date")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataPostalCode"
                                         readonly={true}
-                                        title='Código postal'
+                                        title={t("fields.postal_code")}
                                         required={false}
-                                        placeholder='Código postal'
+                                        placeholder={t("fields.postal_code")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataRoadType"
                                         readonly={true}
-                                        title='Tipo de víalidad'
+                                        title={t("fields.road_type")}
                                         required={false}
-                                        placeholder='Tipo de víalidad'
+                                        placeholder={t("fields.road_type")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataRoadName"
                                         readonly={true}
-                                        title='Nombre de víalidad'
+                                        title={t("fields.road_name")}
                                         required={false}
-                                        placeholder='Nombre de víalidad'
+                                        placeholder={t("fields.road_name")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataExternalNumber"
                                         readonly={true}
-                                        title='Número exterior'
+                                        title={t("fields.external_number")}
                                         required={false}
-                                        placeholder='Número exterior'
+                                        placeholder={t("fields.external_number")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataInternalNumber"
                                         readonly={true}
-                                        title='Número interior'
+                                        title={t("fields.intern_number")}
                                         required={false}
-                                        placeholder='Número interior'
+                                        placeholder={t("fields.intern_number")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataSuburbName"
                                         readonly={true}
-                                        title='Nombre de la colonia'
+                                        title={t("fields.suburb_name")}
                                         required={false}
-                                        placeholder='Nombre de la colonia'
+                                        placeholder={t("fields.suburb_name")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataLocalityName"
                                         readonly={true}
-                                        title='Nombre de la localidad'
+                                        title={t("fields.locality_name")}
                                         required={false}
-                                        placeholder='Nombre de la localidad'
+                                        placeholder={t("fields.locality_name")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataMunicipalityName"
                                         readonly={true}
-                                        title='Nombre del municipio'
+                                        title={t("fields.municipality_name")}
                                         required={false}
-                                        placeholder='Nombre del municipio'
+                                        placeholder={t("fields.municipality_name")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataFederalEntity"
                                         readonly={true}
-                                        title='Entidad federativa'
+                                        title={t("fields.federal_entity")}
                                         required={false}
-                                        placeholder='Entidad federativa'
+                                        placeholder={t("fields.federal_entity")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataBetweenStreet"
                                         readonly={true}
-                                        title='Entre calles'
+                                        title={t("fields.between_street")}
                                         required={false}
-                                        placeholder='Entre calles'
+                                        placeholder={t("fields.between_street")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input
                                         id="taxDataAndStreet"
                                         readonly={true}
-                                        title='Y calle'
+                                        title={t("fields.and_street")}
                                         required={false}
-                                        placeholder='Y calle'
+                                        placeholder={t("fields.and_street")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <div className="col-12">
@@ -209,13 +210,13 @@ const BusinessTaxData: React.FC = () => {
                                         <div className="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
                                             <Button
                                                 id='save'
-                                                title='Guardar información'
+                                                title={t("buttons.save")}
                                                 type='saveButton'
                                                 icon={<SaveIcon />} />
 
                                             <Button
                                                 id='clear'
-                                                title='Limpiar'
+                                                title={t("buttons.clear")}
                                                 type='clearButton'
                                                 icon={<ClearIcon />} />
 

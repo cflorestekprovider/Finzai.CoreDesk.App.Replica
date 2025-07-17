@@ -1,15 +1,18 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import Input from '../../../../BasicComponents/Input/Input';
 import Select from '../../../../BasicComponents/Select/Select';
 import SelectModel from '../../../../../api/models/SelectModel/SelectModel';
 import DatePicker from '../../../../BasicComponents/DatePicker/DatePicker';
 import CustomInputWithModal from '../../../../BasicComponents/CustomInputWithModal/CustomInputWithModal';
 import Button from '../../../../BasicComponents/Button/Button';
-import PostalCode from '../../../../BasicComponents/PostalCode/PostalCode';
+// import PostalCode from '../../../../BasicComponents/PostalCode/PostalCode';
 import { ClearIcon, PhoneIcon, SaveIcon } from '../../../../../api/models/IconsModels/IconsModels';
 
 const BusinessAddress: React.FC = () => {
 
+        const { t } = useTranslation();
+    
     const genderOptions: SelectModel[] = [
         { value: "1", option: 'Masculino' },
         { value: "2", option: 'Femenino' },
@@ -40,8 +43,8 @@ const BusinessAddress: React.FC = () => {
             <div className="col-12">
                 <div className="ui-title-action-bar">
                     <div className="ui-title">
-                        <h4>Domicilio</h4>
-                        <p>DESCRIPCIÓN</p>
+                        <h4>{t("dataentry.tabs.address")}</h4>
+                        <p>{t("dataentry.tabs.address_description")}</p>
                     </div>
                     <div className="ui-action-bar">
 
@@ -102,14 +105,14 @@ const BusinessAddress: React.FC = () => {
                                     <Select 
                                         id="statusAddress" 
                                         readonly={false} 
-                                        title='Estatus' 
+                                        title={t("fields.status")} 
                                         required={true} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' 
                                         options={clientTypeOptions} />
                                     <Select 
                                         id="addressType" 
                                         readonly={false} 
-                                        title='Tipo de Domicilio' 
+                                        title={t("fields.address_type")}
                                         required={true} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' 
                                         options={professionOptions} />
@@ -117,7 +120,7 @@ const BusinessAddress: React.FC = () => {
                                     <Select 
                                         id="propertyType" 
                                         readonly={false} 
-                                        title='Tipo de Propiedad' 
+                                        title={t("fields.property_type")}
                                         required={true} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' 
                                         options={ocupationOptions} />
@@ -126,32 +129,32 @@ const BusinessAddress: React.FC = () => {
                                         id='propertyValue' 
                                         readonly={false} 
                                         required={false} 
-                                        title='Valor de la Propiedad' 
-                                        placeholder='Valor de la Propiedad' 
+                                        title={t("fields.property_value")}
+                                        placeholder={t("fields.property_value")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input 
                                         id='rentalValue' 
                                         readonly={false} 
                                         required={true} 
-                                        title='Hípoteca' 
-                                        placeholder='Hípoteca' 
+                                        title={t("fields.rental_value")}
+                                        placeholder={t("fields.rental_value")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input 
                                         id='livingSinceYears' 
                                         readonly={true} 
                                         required={false} 
-                                        title='Viviendo Desde (Años)' 
-                                        placeholder='Hípoteca' 
+                                        title={t("fields.living_since_years_date")}
+                                        placeholder={t("fields.living_since_years_date")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input 
                                         id='livingSinceMonths' 
                                         readonly={false} 
                                         required={true} 
-                                        title='Viviendo Desde (Meses)' 
-                                        placeholder='Viviendo Desde (Meses)' 
+                                        title={t("fields.living_since_months_date")} 
+                                        placeholder={t("fields.living_since_months_date")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <DatePicker 
@@ -159,12 +162,12 @@ const BusinessAddress: React.FC = () => {
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         readonly={false}
                                         required={true}
-                                        title='Fecha' />
+                                        title={t("fields.date")}  />
 
                                     <div className="col-12 col-md-6 col-lg-4 col-xl-3">
                                         <div className="form-floating mb-3">
                                             <input type="text"  className="form-control" value="Teléfono" id="elm_21" />
-                                            <label htmlFor="elm_21">Tipo Teléfono</label>
+                                            <label htmlFor="elm_21">{t("fields.phone_type")}</label>
                                         </div>
                                     </div>
 
@@ -172,65 +175,65 @@ const BusinessAddress: React.FC = () => {
                                         id="addressPhone"
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3'
                                         required={true}
-                                        title='Teléfono'
+                                        title={t("fields.phone")}
                                         icon={<PhoneIcon />} />
 
                                     <Input 
                                         id='addressExtention' 
                                         readonly={true} 
                                         required={false} 
-                                        title='Extensión' 
-                                        placeholder='Extensión' 
+                                        title={t("fields.extension")} 
+                                        placeholder={t("fields.extension")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
                                    
                                     <Input 
                                         id='addressContactTime' 
                                         readonly={true} 
                                         required={false} 
-                                        title='Hora contacto' 
-                                        placeholder='Hora contacto' 
+                                        title={t("fields.contact_time")}
+                                        placeholder={t("fields.contact_time")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Select 
                                         id="addressCountry" 
                                         readonly={false} 
-                                        title='País' 
+                                        title={t("fields.country")} 
                                         required={true} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' 
                                         options={genderOptions} />
 
-                                   <PostalCode />
+                                   {/* <PostalCode address={_} onAddressChange={_} /> */}
                                     
                                    <Input 
                                         id='addressStreet' 
                                         readonly={false} 
                                         required={false} 
-                                        title='Calle' 
-                                        placeholder='Calle' 
+                                        title={t("fields.street")}  
+                                        placeholder={t("fields.street")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input 
                                         id='addressExternalNumber' 
                                         readonly={false} 
                                         required={false} 
-                                        title='Número Exterior' 
-                                        placeholder='Número Exterior' 
+                                        title={t("fields.external_number")} 
+                                        placeholder={t("fields.external_number")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
                                     
                                     <Input 
                                         id='addressInternalNumber' 
                                         readonly={false} 
                                         required={false} 
-                                        title='Número Interior' 
-                                        placeholder='Número Interior' 
+                                        title={t("fields.intern_number")}
+                                        placeholder={t("fields.intern_number")}
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     <Input 
                                         id='addressCrossWith' 
                                         readonly={false} 
                                         required={false} 
-                                        title='Cruza con' 
-                                        placeholder='Cruza con' 
+                                        title={t("fields.cross_with")} 
+                                        placeholder={t("fields.cross_with")} 
                                         classInput='col-12 col-md-6 col-lg-4 col-xl-3' />
 
                                     
@@ -239,13 +242,13 @@ const BusinessAddress: React.FC = () => {
                                         <div className="d-grid gap-2 d-md-flex justify-content-md-center mt-3">
                                             <Button
                                                 id='save'
-                                                title='Guardar información'
+                                                title={t("buttons.save")}
                                                 type='saveButton'
                                                 icon={<SaveIcon />} />
 
                                             <Button
                                                 id='clear'
-                                                title='Limpiar'
+                                                title={t("buttons.clear")}
                                                 type='clearButton'
                                                 icon={<ClearIcon />} />
                                             
